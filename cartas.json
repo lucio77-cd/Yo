@@ -1,14 +1,16 @@
 [
-  { "id": "c01", "nome": "Guerreiro de Bronze", "atk": 1400, "def": 1200, "nivel": 3, "icone": "🗡️" },
-  { "id": "c02", "nome": "Arqueira das Sombras", "atk": 1600, "def": 900,  "nivel": 3, "icone": "🏹" },
-  { "id": "c03", "nome": "Golem de Pedra", "atk": 800,  "def": 2000, "nivel": 4, "icone": "🗿" },
-  { "id": "c04", "nome": "Lagarto de Fogo", "atk": 1200, "def": 800,  "nivel": 2, "icone": "🦎" },
-  { "id": "c05", "nome": "Cavaleiro Selado", "atk": 1900, "def": 1500, "nivel": 5, "icone": "🛡️" },
-  { "id": "c06", "nome": "Serpente Venenosa", "atk": 1100, "def": 700,  "nivel": 2, "icone": "🐍" },
-  { "id": "c07", "nome": "Grifo Menor", "atk": 1700, "def": 1300, "nivel": 4, "icone": "🦅" },
-  { "id": "c08", "nome": "Escudeiro Novato", "atk": 600,  "def": 1800, "nivel": 2, "icone": "🧍" },
-  { "id": "c09", "nome": "Feiticeiro Errante", "atk": 1500, "def": 1000, "nivel": 3, "icone": "🧙" },
-  { "id": "c10", "nome": "Dragão Filhote", "atk": 2000, "def": 1600, "nivel": 6, "icone": "🐉" },
-  { "id": "c11", "nome": "Espectro Pálido", "atk": 900,  "def": 900,  "nivel": 2, "icone": "👻" },
-  { "id": "c12", "nome": "Colosso de Bronze", "atk": 2200, "def": 800,  "nivel": 6, "icone": "🗿" }
+  { "id": "c01", "nome": "Blue-Eyes White Dragon", "atk": 3000, "def": 2500, "nivel": 8, "atributo": "light", "tipo": "Dragão" },
+  { "id": "c02", "nome": "Dark Magician", "atk": 2500, "def": 2100, "nivel": 7, "atributo": "dark", "tipo": "Mago" },
+  { "id": "c03", "nome": "Red-Eyes Black Dragon", "atk": 2400, "def": 2000, "nivel": 7, "atributo": "dark", "tipo": "Dragão" },
+  { "id": "c04", "nome": "Summoned Skull", "atk": 2500, "def": 1200, "nivel": 6, "atributo": "dark", "tipo": "Demônio" },
+  { "id": "c05", "nome": "Jinzo", "atk": 2400, "def": 1500, "nivel": 6, "atributo": "dark", "tipo": "Máquina" },
+  { "id": "c06", "nome": "Gaia the Fierce Knight", "atk": 2300, "def": 2100, "nivel": 7, "atributo": "earth", "tipo": "Guerreiro" },
+  { "id": "c07", "nome": "Curse of Dragon", "atk": 2000, "def": 1500, "nivel": 5, "atributo": "dark", "tipo": "Dragão" },
+  { "id": "c08", "nome": "Gearfried the Iron Knight", "atk": 1800, "def": 1600, "nivel": 4, "atributo": "earth", "tipo": "Guerreiro" },
+  { "id": "c09", "nome": "Battle Ox", "atk": 1700, "def": 1000, "nivel": 4, "atributo": "earth", "tipo": "Guerreiro-Fera" },
+  { "id": "c10", "nome": "Celtic Guardian", "atk": 1400, "def": 1200, "nivel": 4, "atributo": "earth", "tipo": "Guerreiro" },
+  { "id": "c11", "nome": "Feral Imp", "atk": 1300, "def": 1400, "nivel": 4, "atributo": "dark", "tipo": "Demônio" },
+  { "id": "c12", "nome": "Mystical Elf", "atk": 800, "def": 2000, "nivel": 4, "atributo": "light", "tipo": "Mago" },
+  { "id": "c13", "nome": "Mammoth Graveyard", "atk": 1200, "def": 800, "nivel": 3, "atributo": "earth", "tipo": "Dinossauro" },
+  { "id": "c14", "nome": "Kuriboh", "atk": 300, "def": 200, "nivel": 1, "atributo": "dark", "tipo": "Demônio" }
 ]

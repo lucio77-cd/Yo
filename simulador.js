@@ -37,6 +37,7 @@ async function iniciarJogo() {
     lp: { jogador: 8000, ia: 8000 },
     deck: { jogador: montarDeck(base), ia: montarDeck(base) },
     mao: { jogador: [], ia: [] },
+    cemiterio: { jogador: [], ia: [] },
     campo: {
       jogador: Array(ZONAS).fill(null),
       ia: Array(ZONAS).fill(null),
@@ -183,6 +184,7 @@ function resolverCombate(ladoAtk, idxAtk, ladoDef, idxDef) {
   if (defensor.pos === "def") {
     if (atacante.atk > defensor.def) {
       registrar(`${atacante.nome} (${atacante.atk} ATK) venceu ${defensor.nome} (${defensor.def} DEF). Monstro destruído. Sem dano de LP — monstro em defesa não causa dano ao ser vencido.`);
+      estado.cemiterio[ladoDef].push(defensor);
       estado.campo[ladoDef][idxDef] = null;
     } else if (atacante.atk < defensor.def) {
       const dano = defensor.def - atacante.atk;
@@ -197,14 +199,18 @@ function resolverCombate(ladoAtk, idxAtk, ladoDef, idxDef) {
       const dano = atacante.atk - defensor.atk;
       estado.lp[ladoDef] -= dano;
       registrar(`${atacante.nome} (${atacante.atk}) venceu ${defensor.nome} (${defensor.atk}). Monstro destruído e o dono perde ${dano} de LP.`);
+      estado.cemiterio[ladoDef].push(defensor);
       estado.campo[ladoDef][idxDef] = null;
     } else if (atacante.atk < defensor.atk) {
       const dano = defensor.atk - atacante.atk;
       estado.lp[ladoAtk] -= dano;
       registrar(`${atacante.nome} (${atacante.atk}) perdeu para ${defensor.nome} (${defensor.atk}). Seu monstro é destruído e você perde ${dano} de LP.`);
+      estado.cemiterio[ladoAtk].push(atacante);
       estado.campo[ladoAtk][idxAtk] = null;
     } else {
       registrar(`Empate: ${atacante.nome} e ${defensor.nome} têm o mesmo ATK. Os dois são destruídos, sem dano de LP.`);
+      estado.cemiterio[ladoDef].push(defensor);
+      estado.cemiterio[ladoAtk].push(atacante);
       estado.campo[ladoDef][idxDef] = null;
       estado.campo[ladoAtk][idxAtk] = null;
     }
@@ -297,17 +303,31 @@ function encerrarJogo(vencedor, motivo) {
 
 // ---------- render ----------
 
-function cartaHTML(zona, { clicavel, onClick } = {}) {
+const ATRIBUTO = {
+  light:  { simbolo: "☀", nome: "Luz",   cor: "#e8d488" },
+  dark:   { simbolo: "☾", nome: "Trevas", cor: "#9b7fd4" },
+  earth:  { simbolo: "⛰", nome: "Terra", cor: "#8fbf6a" },
+  fire:   { simbolo: "🔥", nome: "Fogo",  cor: "#e07a4f" },
+  water:  { simbolo: "💧", nome: "Água",  cor: "#5aa8d6" },
+  wind:   { simbolo: "🌪", nome: "Vento", cor: "#6fd0c4" },
+};
+
+function cartaHTML(zona, { clicavel } = {}) {
   if (!zona) return `<div class="zona vazia"></div>`;
   if (zona.faceDown) {
     return `<div class="zona ocupada face-down ${clicavel ? "clicavel" : ""}" ${clicavel ? `data-click="1"` : ""}>
       <div class="carta-campo"><div class="verso">🂠</div><div class="pos-tag">defesa</div></div>
     </div>`;
   }
-  return `<div class="zona ocupada ${clicavel ? "clicavel" : ""}" ${clicavel ? `data-click="1"` : ""}>
+  const at = ATRIBUTO[zona.atributo] || ATRIBUTO.earth;
+  return `<div class="zona ocupada ${clicavel ? "clicavel" : ""}" ${clicavel ? `data-click="1"` : ""} style="--cor-at:${at.cor}">
     <div class="carta-campo">
-      <div class="icone">${zona.icone}</div>
+      <div class="topo-carta">
+        <span class="at-icone" title="${at.nome}">${at.simbolo}</span>
+        <span class="nivel">Nv.${zona.nivel}</span>
+      </div>
       <div class="nome">${zona.nome}</div>
+      <div class="tipo-monstro">${zona.tipo}</div>
       <div class="stats">${zona.atk} / ${zona.def}</div>
       <div class="pos-tag">${zona.pos === "atk" ? "ataque" : "defesa"}${zona.atacou ? " · já atacou" : ""}</div>
     </div>
@@ -319,6 +339,12 @@ function render() {
 
   document.getElementById("lp-ia").textContent = Math.max(estado.lp.ia, 0);
   document.getElementById("lp-jogador").textContent = Math.max(estado.lp.jogador, 0);
+  document.getElementById("lp-barra-ia").style.width = `${Math.max(estado.lp.ia, 0) / 80}%`;
+  document.getElementById("lp-barra-jogador").style.width = `${Math.max(estado.lp.jogador, 0) / 80}%`;
+  document.getElementById("deck-ia").textContent = estado.deck.ia.length;
+  document.getElementById("deck-jogador").textContent = estado.deck.jogador.length;
+  document.getElementById("cemiterio-ia").textContent = estado.cemiterio.ia.length;
+  document.getElementById("cemiterio-jogador").textContent = estado.cemiterio.jogador.length;
 
   const campoIA = document.getElementById("campo-ia");
   campoIA.innerHTML = estado.campo.ia
@@ -348,13 +374,15 @@ function render() {
 
   const mao = document.getElementById("mao-jogador");
   mao.innerHTML = estado.mao.jogador
-    .map(
-      (c, i) => `
+    .map((c, i) => {
+      const at = ATRIBUTO[c.atributo] || ATRIBUTO.earth;
+      return `
     <div class="carta-mao">
-      <div class="carta-mini">
-        <div class="img">${c.icone}</div>
+      <div class="carta-mini" style="--cor-at:${at.cor}">
+        <div class="img"><span class="at-icone">${at.simbolo}</span><span class="nivel">Nv.${c.nivel}</span></div>
         <div class="corpo">
           <div class="nome">${c.nome}</div>
+          <div class="tipo-monstro">${c.tipo}</div>
           <div class="stats">${c.atk} / ${c.def}</div>
         </div>
       </div>
@@ -362,8 +390,8 @@ function render() {
         <button ${podeInvocar ? "" : "disabled"} title="${podeInvocar ? "" : motivoTravado}" data-acao="atk" data-i="${i}">Invocar (Ataque)</button>
         <button ${podeInvocar ? "" : "disabled"} title="${podeInvocar ? "" : motivoTravado}" data-acao="def" data-i="${i}">Definir (Defesa)</button>
       </div>
-    </div>`
-    )
+    </div>`;
+    })
     .join("");
   document.getElementById("motivo-mao").textContent = podeInvocar ? "" : motivoTravado;
 

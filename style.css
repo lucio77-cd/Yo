@@ -228,7 +228,7 @@ main { max-width: 920px; margin: 0 auto; padding: 40px 24px 100px; }
   display: inline-flex;
   flex-direction: column;
   width: 150px;
-  border: 1.5px solid var(--gold-dim);
+  border: 1.5px solid var(--cor-at, var(--gold-dim));
   border-radius: 8px;
   background: var(--void-panel-2);
   overflow: hidden;
@@ -237,20 +237,31 @@ main { max-width: 920px; margin: 0 auto; padding: 40px 24px 100px; }
 }
 
 .carta-mini .img {
-  height: 90px;
+  height: 70px;
   background: linear-gradient(135deg, #2a2050, #14102a);
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 1.6rem;
+  justify-content: space-between;
+  padding: 8px 10px;
+  font-size: 1.3rem;
 }
+.carta-mini .img .at-icone { color: var(--cor-at, var(--gold)); }
+.carta-mini .img .nivel { font-family: var(--font-mono); font-size: 0.62rem; color: var(--gold-dim); align-self: flex-start; margin-top: 2px; }
 
 .carta-mini .corpo { padding: 8px 10px; }
 
 .carta-mini .nome {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--parchment);
   font-weight: 600;
+  margin-bottom: 2px;
+  line-height: 1.2;
+}
+
+.carta-mini .tipo-monstro {
+  font-size: 0.62rem;
+  color: var(--parchment-dim);
+  font-style: italic;
   margin-bottom: 4px;
 }
 
@@ -304,88 +315,131 @@ main { max-width: 920px; margin: 0 auto; padding: 40px 24px 100px; }
 /* ---------- simulador de duelo ---------- */
 
 .tabuleiro {
-  background: var(--void-panel);
+  background:
+    radial-gradient(ellipse at top, rgba(232,196,104,0.06), transparent 60%),
+    linear-gradient(160deg, #201535, #150f28 60%, #0e0a1f);
   border: 1px solid rgba(232, 196, 104, 0.15);
   border-radius: 14px;
-  padding: 20px;
+  padding: 18px;
   margin-bottom: 24px;
 }
 
-.barra-lp {
+.linha-duelista {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  padding: 4px 6px 16px;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 4px;
+}
+.linha-duelista.inverte { flex-direction: row-reverse; }
+
+.duelista { display: flex; align-items: center; gap: 10px; }
+.linha-duelista.inverte .duelista { flex-direction: row-reverse; }
+
+.avatar-duelista {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  border: 2px solid var(--gold-dim);
+  background: var(--void-panel-2);
+  flex-shrink: 0;
+}
+.avatar-duelista.jogador { border-color: var(--emerald); }
+
+.info-duelista { display: flex; flex-direction: column; gap: 3px; min-width: 130px; }
+.info-duelista.dir { align-items: flex-end; }
+.info-duelista .rotulo { font-family: var(--font-mono); font-size: 0.68rem; color: var(--parchment-dim); text-transform: uppercase; letter-spacing: 0.06em; }
+.info-duelista .valor-lp { font-family: var(--font-mono); font-size: 0.95rem; color: var(--gold); font-weight: 600; }
+
+.barra-lp-container {
+  width: 130px; height: 7px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(232,196,104,0.2);
+}
+.barra-lp-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--emerald), var(--gold));
+  transition: width 0.4s ease;
 }
 
-.barra-lp .lado { display: flex; flex-direction: column; gap: 4px; }
-.barra-lp .lado.dir { align-items: flex-end; }
-.barra-lp .rotulo { color: var(--parchment-dim); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
-.barra-lp .valor { font-size: 1.3rem; color: var(--gold); }
-.barra-lp .valor.baixo { color: var(--danger); }
+.pilhas { display: flex; gap: 8px; }
+.pilha {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--parchment-dim);
+  background: var(--void-panel-2);
+  border: 1px solid rgba(232,196,104,0.15);
+  border-radius: 6px;
+  padding: 5px 8px;
+  display: flex; align-items: center; gap: 5px;
+}
 
 .campo-linha {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  margin: 10px 0;
+  margin: 8px 0;
 }
 
 .zona {
-  min-height: 110px;
-  border: 1px dashed rgba(232, 196, 104, 0.25);
+  min-height: 118px;
+  border: 1px dashed rgba(232, 196, 104, 0.22);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.2);
 }
 
-.zona.ocupada { border-style: solid; border-color: var(--gold-dim); background: var(--void-panel-2); }
+.zona.ocupada {
+  border-style: solid;
+  border-color: var(--cor-at, var(--gold-dim));
+  background: var(--void-panel-2);
+  box-shadow: 0 0 12px -4px var(--cor-at, transparent);
+}
 .zona.clicavel { cursor: pointer; border-color: var(--emerald); box-shadow: 0 0 0 1px var(--emerald) inset; }
 .zona.clicavel:hover { background: rgba(53, 208, 161, 0.08); }
 
 .carta-campo { text-align: center; padding: 8px; width: 100%; }
-.carta-campo .icone { font-size: 1.6rem; }
+.carta-campo .topo-carta { display: flex; justify-content: space-between; padding: 0 4px; }
+.carta-campo .at-icone { font-size: 0.85rem; color: var(--cor-at, var(--gold)); }
+.carta-campo .nivel { font-family: var(--font-mono); font-size: 0.62rem; color: var(--gold-dim); }
 .carta-campo .verso { font-size: 1.8rem; color: var(--gold-dim); }
-.carta-campo .nome { font-size: 0.78rem; color: var(--parchment); margin-top: 2px; }
-.carta-campo .stats { font-family: var(--font-mono); font-size: 0.72rem; color: var(--emerald); }
-.carta-campo .pos-tag { font-size: 0.65rem; color: var(--parchment-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+.carta-campo .nome { font-size: 0.73rem; color: var(--parchment); margin-top: 3px; font-weight: 600; line-height: 1.2; }
+.carta-campo .tipo-monstro { font-size: 0.62rem; color: var(--parchment-dim); font-style: italic; }
+.carta-campo .stats { font-family: var(--font-mono); font-size: 0.72rem; color: var(--emerald); margin-top: 2px; }
+.carta-campo .pos-tag { font-size: 0.62rem; color: var(--parchment-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
 
 .divisor-campo {
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--gold-dim);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin: 6px 0;
-  border-top: 1px dashed rgba(232, 196, 104, 0.2);
-  padding-top: 6px;
-}
-
-.stepper {
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-top: 14px;
+  justify-content: center;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
+  color: var(--gold-dim);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 8px 0;
+  padding: 8px 0;
+  border-top: 1px dashed rgba(232, 196, 104, 0.2);
+  border-bottom: 1px dashed rgba(232, 196, 104, 0.2);
   flex-wrap: wrap;
 }
 
-.stepper .passo {
+.divisor-campo .passo {
   padding: 4px 10px;
   border-radius: 20px;
   border: 1px solid rgba(232, 196, 104, 0.2);
   color: var(--parchment-dim);
 }
-
-.stepper .passo.feito { color: var(--emerald); border-color: rgba(53, 208, 161, 0.4); }
-.stepper .passo.ativo { color: var(--void); background: var(--gold); border-color: var(--gold); font-weight: 600; }
-.stepper .seta { color: var(--gold-dim); }
+.divisor-campo .passo.feito { color: var(--emerald); border-color: rgba(53, 208, 161, 0.4); }
+.divisor-campo .passo.ativo { color: var(--void); background: var(--gold); border-color: var(--gold); font-weight: 600; }
+.divisor-campo .seta { color: var(--gold-dim); }
 
 .controles-turno {
   display: flex;

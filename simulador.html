@@ -26,26 +26,43 @@
   </section>
 
   <div class="tabuleiro">
-    <div class="barra-lp">
-      <div class="lado">
-        <span class="rotulo">Oponente</span>
-        <span class="valor" id="lp-ia">8000</span>
+    <div class="linha-duelista">
+      <div class="duelista">
+        <div class="avatar-duelista ia">🜏</div>
+        <div class="info-duelista">
+          <span class="rotulo">Oponente</span>
+          <div class="barra-lp-container"><div class="barra-lp-fill" id="lp-barra-ia"></div></div>
+          <span class="valor-lp" id="lp-ia">8000</span>
+        </div>
       </div>
-      <div class="lado dir">
-        <span class="rotulo">Você</span>
-        <span class="valor" id="lp-jogador">8000</span>
+      <div class="pilhas">
+        <div class="pilha" title="Deck">🂠<span id="deck-ia">20</span></div>
+        <div class="pilha" title="Cemitério">🪦<span id="cemiterio-ia">0</span></div>
       </div>
     </div>
 
     <div class="campo-linha" id="campo-ia"></div>
-    <div class="divisor-campo">campo</div>
+    <div class="divisor-campo" id="stepper"></div>
     <div class="campo-linha" id="campo-jogador"></div>
+
+    <div class="linha-duelista inverte">
+      <div class="pilhas">
+        <div class="pilha" title="Deck">🂠<span id="deck-jogador">20</span></div>
+        <div class="pilha" title="Cemitério">🪦<span id="cemiterio-jogador">0</span></div>
+      </div>
+      <div class="duelista">
+        <div class="info-duelista dir">
+          <span class="rotulo">Você</span>
+          <div class="barra-lp-container"><div class="barra-lp-fill" id="lp-barra-jogador"></div></div>
+          <span class="valor-lp" id="lp-jogador">8000</span>
+        </div>
+        <div class="avatar-duelista jogador">🜏</div>
+      </div>
+    </div>
 
     <div id="aviso-alvo">
       Monstro selecionado. Clique num monstro do oponente pra atacar, ou use "Ataque direto" se o campo dele estiver vazio.
     </div>
-
-    <div class="stepper" id="stepper"></div>
 
     <div class="controles-turno">
       <span class="fase-label" id="fase-atual">Fase Principal 1</span>
