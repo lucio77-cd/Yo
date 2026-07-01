@@ -1,0 +1,332 @@
+/* ===========================================================
+   YGOH — Aprenda Yu-Gi-Oh do zero
+   Paleta: vazio noturno + ouro de tabuleta + toque de esmeralda
+   =========================================================== */
+
+:root {
+  --void: #0e0a1f;
+  --void-panel: #17122c;
+  --void-panel-2: #1e1839;
+  --gold: #e8c468;
+  --gold-dim: #a8894a;
+  --parchment: #f4ead5;
+  --parchment-dim: #c9bfa8;
+  --emerald: #35d0a1;
+  --danger: #e8636b;
+
+  --font-display: "Cinzel", "Georgia", serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--void);
+  color: var(--parchment);
+  font-family: var(--font-body);
+  scroll-behavior: smooth;
+}
+
+body {
+  background-image:
+    radial-gradient(circle at 15% 0%, rgba(232, 196, 104, 0.08), transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(53, 208, 161, 0.06), transparent 35%);
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ---------- topo ---------- */
+header.site {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  border-bottom: 1px solid rgba(232, 196, 104, 0.15);
+}
+
+header.site .brand {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+}
+
+header.site .brand span {
+  color: var(--parchment-dim);
+  font-size: 0.85rem;
+  display: block;
+  font-family: var(--font-body);
+  letter-spacing: 0.02em;
+  margin-top: 2px;
+}
+
+nav.crumbs a {
+  color: var(--parchment-dim);
+  font-size: 0.9rem;
+  margin-left: 18px;
+  transition: color 0.2s;
+}
+nav.crumbs a:hover, nav.crumbs a.active { color: var(--gold); }
+
+main { max-width: 920px; margin: 0 auto; padding: 40px 24px 100px; }
+
+/* ---------- hero ---------- */
+.hero {
+  text-align: left;
+  padding: 40px 0 56px;
+  border-bottom: 1px solid rgba(232, 196, 104, 0.12);
+  margin-bottom: 48px;
+}
+
+.hero .eyebrow {
+  font-family: var(--font-mono);
+  color: var(--emerald);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--gold);
+  margin: 12px 0 16px;
+  line-height: 1.15;
+}
+
+.hero p {
+  color: var(--parchment-dim);
+  font-size: 1.05rem;
+  max-width: 56ch;
+  line-height: 1.6;
+}
+
+/* ---------- trilha (numerada de propósito: é uma sequência real) ---------- */
+.trilha {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.trilha-item {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 20px;
+  background: var(--void-panel);
+  border: 1px solid rgba(232, 196, 104, 0.14);
+  border-radius: var(--radius);
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.trilha-item:hover {
+  border-color: var(--gold);
+  transform: translateX(4px);
+}
+
+.trilha-item .num {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--gold-dim);
+}
+
+.trilha-item.done .num { color: var(--emerald); }
+
+.trilha-item .info h3 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+  color: var(--parchment);
+}
+
+.trilha-item .info p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--parchment-dim);
+}
+
+.trilha-item .status {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--parchment-dim);
+  white-space: nowrap;
+}
+
+.trilha-item.done .status { color: var(--emerald); }
+
+/* ---------- carta oráculo (componente-assinatura) ---------- */
+.oraculo {
+  perspective: 1200px;
+  cursor: pointer;
+  margin: 20px 0;
+}
+
+.oraculo-inner {
+  position: relative;
+  min-height: 190px;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(.2,.7,.3,1);
+  border-radius: 14px;
+}
+
+.oraculo.flipped .oraculo-inner { transform: rotateY(180deg); }
+
+.oraculo-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 14px;
+  padding: 22px 24px;
+  border: 1.5px solid var(--gold-dim);
+  background: linear-gradient(160deg, var(--void-panel-2), var(--void-panel));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.oraculo-face.front { }
+.oraculo-face.back { transform: rotateY(180deg); }
+
+.oraculo-face .tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--emerald);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.oraculo-face h3 {
+  font-family: var(--font-display);
+  color: var(--gold);
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+}
+
+.oraculo-face p {
+  margin: 0;
+  color: var(--parchment-dim);
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
+
+.oraculo-hint {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--gold-dim);
+  margin-top: 10px;
+}
+
+/* ---------- carta de jogo (mini) ---------- */
+.carta-mini {
+  display: inline-flex;
+  flex-direction: column;
+  width: 150px;
+  border: 1.5px solid var(--gold-dim);
+  border-radius: 8px;
+  background: var(--void-panel-2);
+  overflow: hidden;
+  margin: 6px;
+  vertical-align: top;
+}
+
+.carta-mini .img {
+  height: 90px;
+  background: linear-gradient(135deg, #2a2050, #14102a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.carta-mini .corpo { padding: 8px 10px; }
+
+.carta-mini .nome {
+  font-size: 0.8rem;
+  color: var(--parchment);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.carta-mini .stats {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--emerald);
+}
+
+/* ---------- blocos de conteúdo ---------- */
+.secao { margin-bottom: 44px; }
+
+.secao h2 {
+  font-family: var(--font-display);
+  color: var(--gold);
+  font-size: 1.5rem;
+  border-bottom: 1px solid rgba(232, 196, 104, 0.18);
+  padding-bottom: 10px;
+  margin-bottom: 18px;
+}
+
+.secao p, .secao li {
+  line-height: 1.7;
+  color: var(--parchment-dim);
+  font-size: 0.98rem;
+}
+
+.secao strong { color: var(--parchment); }
+
+.callout {
+  background: var(--void-panel);
+  border-left: 3px solid var(--emerald);
+  padding: 14px 18px;
+  border-radius: 6px;
+  margin: 18px 0;
+  font-size: 0.92rem;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .trilha-item { grid-template-columns: 40px 1fr; }
+  .trilha-item .status { grid-column: 2; }
+}
+
+/* ---------- navegação inferior ---------- */
+.prox-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(232, 196, 104, 0.15);
+}
+
+.prox-nav a {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+  padding: 10px 16px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.prox-nav a:hover { background: rgba(232, 196, 104, 0.1); }
+
+/* acessibilidade: foco visível */
+a:focus-visible, .oraculo:focus-visible, button:focus-visible {
+  outline: 2px solid var(--emerald);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>01 · O básico — YGOH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="site">
+  <div class="brand">YGOH<span>lição 01 de 04</span></div>
+  <nav class="crumbs">
+    <a href="index.html">Início</a>
+    <a href="simbolos.html">Glossário</a>
+    <a href="quiz.html">Quiz</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" style="padding-top:0;">
+    <div class="eyebrow">Lição 01</div>
+    <h1>O básico</h1>
+    <p>Antes de qualquer regra, duas perguntas: o que você está tentando fazer, e com o quê.</p>
+  </section>
+
+  <section class="secao">
+    <h2>O objetivo</h2>
+    <p>Cada duelista começa com <strong>8000 pontos de vida (LP — Life Points)</strong>. Você vence quando os pontos de vida do adversário chegam a zero — ou quando ele não consegue comprar carta no início do turno dele, com o deck vazio.</p>
+    <p>Você reduz os pontos de vida do adversário principalmente atacando com monstros. É isso: o jogo inteiro gira em torno de montar uma jogada que te deixa numa posição melhor pra atacar (ou pra sobreviver ao ataque do outro).</p>
+  </section>
+
+  <section class="secao">
+    <h2>Os 3 tipos de carta</h2>
+    <p>Todo o deck (40 a 60 cartas) é feito de três tipos. Toque em cada carta abaixo pra virar e ver o resumo.</p>
+
+    <div class="grid-2">
+      <div class="oraculo" tabindex="0">
+        <div class="oraculo-inner">
+          <div class="oraculo-face front">
+            <div class="tag">Tipo 1</div>
+            <h3>Monstro</h3>
+            <p>Quem ataca e defende. Tem números de ATK e DEF.</p>
+            <div class="oraculo-hint">toque pra virar</div>
+          </div>
+          <div class="oraculo-face back">
+            <div class="tag">Resumo</div>
+            <p>É a única carta que pode atacar e receber ataques. Fica na <strong>Zona de Monstro</strong>. Você a coloca virada pra cima em <strong>ataque</strong> ou virada de lado em <strong>defesa</strong> — isso muda como o combate é calculado (lição 04).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="oraculo" tabindex="0">
+        <div class="oraculo-inner">
+          <div class="oraculo-face front">
+            <div class="tag">Tipo 2</div>
+            <h3>Magia (Spell)</h3>
+            <p>Efeitos de apoio: destruir, buscar, curar, reforçar.</p>
+            <div class="oraculo-hint">toque pra virar</div>
+          </div>
+          <div class="oraculo-face back">
+            <div class="tag">Resumo</div>
+            <p>Cartas verdes na vida real. Não atacam nem defendem — elas <strong>fazem algo</strong> quando ativadas: destroem uma carta do oponente, compram cartas extras, aumentam o ATK de um monstro, etc. Ficam na <strong>Zona de Magia/Armadilha</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="oraculo" tabindex="0">
+        <div class="oraculo-inner">
+          <div class="oraculo-face front">
+            <div class="tag">Tipo 3</div>
+            <h3>Armadilha (Trap)</h3>
+            <p>Uma emboscada: você prepara e ativa depois, na hora certa.</p>
+            <div class="oraculo-hint">toque pra virar</div>
+          </div>
+          <div class="oraculo-face back">
+            <div class="tag">Resumo</div>
+            <p>Cartas laranjas. A diferença pra Magia: uma Armadilha entra no campo <strong>virada pra baixo</strong> e só pode ser ativada <strong>a partir do turno seguinte</strong> — nunca no mesmo turno em que foi colocada. Isso cria o momento clássico de "surpresa" no jogo.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="oraculo" tabindex="0">
+        <div class="oraculo-inner">
+          <div class="oraculo-face front">
+            <div class="tag">Extra</div>
+            <h3>ATK / DEF</h3>
+            <p>Os dois números que toda carta de monstro tem.</p>
+            <div class="oraculo-hint">toque pra virar</div>
+          </div>
+          <div class="oraculo-face back">
+            <div class="tag">Resumo</div>
+            <p><strong>ATK</strong> (ataque) decide o dano que o monstro causa ao atacar. <strong>DEF</strong> (defesa) decide o quanto ele aguenta ao ser atacado enquanto está em modo de defesa. Um monstro de 1800 ATK vencendo um combate contra um de 1200 ATK causa 600 de dano ao dono do mais fraco — veremos a conta completa na lição 04.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao">
+    <div class="callout">
+      <strong>Resumindo antes de continuar:</strong> você tem 8000 LP, quer zerar os do adversário, e monta isso combinando Monstros (atacam), Magias (efeitos imediatos) e Armadilhas (efeitos preparados). Isso já é o suficiente pra entender a próxima lição: onde cada carta fica no campo.
+    </div>
+  </section>
+
+  <div class="prox-nav">
+    <a href="index.html">← voltar à trilha</a>
+    <a href="campo.html" data-concluir="basico">próxima: o campo de batalha →</a>
+  </div>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
