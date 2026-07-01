@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Simulador de Duelo — YGOH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="site">
+  <div class="brand">YGOH<span>simulador · aprenda jogando</span></div>
+  <nav class="crumbs">
+    <a href="index.html">Início</a>
+    <a href="simbolos.html">Glossário</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" style="padding-top:0; padding-bottom:24px;">
+    <div class="eyebrow">Modo prática</div>
+    <h1>Duelo simplificado</h1>
+    <p>Só monstros, por enquanto — sem Magia/Armadilha, pra você sentir o combate e o ritmo do turno sem ruído. Cada jogada mostra <strong>por que</strong> o resultado aconteceu no log abaixo.</p>
+  </section>
+
+  <div class="tabuleiro">
+    <div class="barra-lp">
+      <div class="lado">
+        <span class="rotulo">Oponente</span>
+        <span class="valor" id="lp-ia">8000</span>
+      </div>
+      <div class="lado dir">
+        <span class="rotulo">Você</span>
+        <span class="valor" id="lp-jogador">8000</span>
+      </div>
+    </div>
+
+    <div class="campo-linha" id="campo-ia"></div>
+    <div class="divisor-campo">campo</div>
+    <div class="campo-linha" id="campo-jogador"></div>
+
+    <div id="aviso-alvo">
+      Monstro selecionado. Clique num monstro do oponente pra atacar, ou use "Ataque direto" se o campo dele estiver vazio.
+    </div>
+
+    <div class="controles-turno">
+      <span class="fase-label" id="fase-atual">Fase Principal 1</span>
+      <button id="btn-ataque-direto">Ataque direto</button>
+      <button id="btn-batalha">Ir para Batalha</button>
+      <button id="btn-encerrar">Encerrar turno</button>
+    </div>
+  </div>
+
+  <section class="secao" style="margin-bottom:20px;">
+    <h2 style="font-size:1.1rem;">Sua mão</h2>
+    <div class="mao-linha" id="mao-jogador"></div>
+  </section>
+
+  <section class="secao">
+    <h2 style="font-size:1.1rem;">O que está acontecendo</h2>
+    <div class="painel-log" id="log"></div>
+  </section>
+
+  <div class="callout">
+    <strong>Como jogar:</strong> na Fase Principal 1, invoque um monstro da mão (ataque ou defesa virada pra baixo). Vá pra Batalha, clique num monstro seu em ataque pra selecioná-lo, depois clique no alvo — ou ataque direto se o oponente não tiver monstros. Encerre o turno quando terminar.
+  </div>
+</main>
+
+<div id="overlay-fim">
+  <h2 id="overlay-msg"></h2>
+  <button id="btn-reiniciar">Jogar de novo</button>
+</div>
+
+<script src="simulador.js"></script>
+</body>
+</html>

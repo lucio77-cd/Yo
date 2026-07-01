@@ -1,0 +1,14 @@
+[
+  { "id": "c01", "nome": "Guerreiro de Bronze", "atk": 1400, "def": 1200, "nivel": 3, "icone": "🗡️" },
+  { "id": "c02", "nome": "Arqueira das Sombras", "atk": 1600, "def": 900,  "nivel": 3, "icone": "🏹" },
+  { "id": "c03", "nome": "Golem de Pedra", "atk": 800,  "def": 2000, "nivel": 4, "icone": "🗿" },
+  { "id": "c04", "nome": "Lagarto de Fogo", "atk": 1200, "def": 800,  "nivel": 2, "icone": "🦎" },
+  { "id": "c05", "nome": "Cavaleiro Selado", "atk": 1900, "def": 1500, "nivel": 5, "icone": "🛡️" },
+  { "id": "c06", "nome": "Serpente Venenosa", "atk": 1100, "def": 700,  "nivel": 2, "icone": "🐍" },
+  { "id": "c07", "nome": "Grifo Menor", "atk": 1700, "def": 1300, "nivel": 4, "icone": "🦅" },
+  { "id": "c08", "nome": "Escudeiro Novato", "atk": 600,  "def": 1800, "nivel": 2, "icone": "🧍" },
+  { "id": "c09", "nome": "Feiticeiro Errante", "atk": 1500, "def": 1000, "nivel": 3, "icone": "🧙" },
+  { "id": "c10", "nome": "Dragão Filhote", "atk": 2000, "def": 1600, "nivel": 6, "icone": "🐉" },
+  { "id": "c11", "nome": "Espectro Pálido", "atk": 900,  "def": 900,  "nivel": 2, "icone": "👻" },
+  { "id": "c12", "nome": "Colosso de Bronze", "atk": 2200, "def": 800,  "nivel": 6, "icone": "🗿" }
+]
