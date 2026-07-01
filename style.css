@@ -404,6 +404,36 @@ main { max-width: 920px; margin: 0 auto; padding: 40px 24px 100px; }
 .zona.clicavel { cursor: pointer; border-color: var(--emerald); box-shadow: 0 0 0 1px var(--emerald) inset; }
 .zona.clicavel:hover { background: rgba(53, 208, 161, 0.08); }
 
+.zona.com-arte { padding: 0; overflow: hidden; }
+.zona.com-arte .carta-campo { padding: 0; height: 100%; display: flex; flex-direction: column; }
+
+.arte-real {
+  width: 100%;
+  flex: 1;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px 6px 0 0;
+}
+
+.legenda-real {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--emerald);
+  background: var(--void-panel-2);
+}
+.legenda-real .pos-tag { color: var(--parchment-dim); text-transform: uppercase; }
+
+.arte-real-mini {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  display: block;
+}
+
 .carta-campo { text-align: center; padding: 8px; width: 100%; }
 .carta-campo .topo-carta { display: flex; justify-content: space-between; padding: 0 4px; }
 .carta-campo .at-icone { font-size: 0.85rem; color: var(--cor-at, var(--gold)); }
@@ -440,6 +470,15 @@ main { max-width: 920px; margin: 0 auto; padding: 40px 24px 100px; }
 .divisor-campo .passo.feito { color: var(--emerald); border-color: rgba(53, 208, 161, 0.4); }
 .divisor-campo .passo.ativo { color: var(--void); background: var(--gold); border-color: var(--gold); font-weight: 600; }
 .divisor-campo .seta { color: var(--gold-dim); }
+
+.status-imagens {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--gold-dim);
+  min-height: 1.2em;
+  margin-top: 4px;
+}
 
 .controles-turno {
   display: flex;
@@ -581,4 +620,40 @@ a:focus-visible, .oraculo:focus-visible, button:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
+}
+
+/* ---------- modo paisagem (celular de lado) ---------- */
+@media (orientation: landscape) and (max-height: 550px) {
+  header.site { padding: 8px 16px; }
+  main { padding: 8px 16px 40px; max-width: 100%; }
+
+  body:has(.tabuleiro) .hero { display: none; }
+  body:has(.tabuleiro) .secao h2 { display: none; }
+
+  .tabuleiro { padding: 10px; margin-bottom: 12px; }
+  .linha-duelista { padding: 2px; }
+  .avatar-duelista { width: 30px; height: 30px; font-size: 0.95rem; }
+  .barra-lp-container { width: 90px; }
+  .info-duelista { min-width: 90px; }
+
+  .campo-linha { gap: 6px; margin: 6px 0; }
+  .zona { min-height: 78px; }
+  .carta-campo .nome { font-size: 0.62rem; }
+  .carta-campo .stats, .legenda-real { font-size: 0.6rem; }
+  .carta-campo .tipo-monstro { display: none; }
+
+  .divisor-campo { margin: 6px 0; padding: 5px 0; font-size: 0.6rem; }
+
+  .mao-linha {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .carta-mao { flex: 0 0 auto; }
+  .carta-mini { width: 118px; }
+  .arte-real-mini { height: 68px; }
+
+  .painel-log { max-height: 120px; }
+  .callout { display: none; }
 }
