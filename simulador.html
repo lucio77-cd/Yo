@@ -45,10 +45,13 @@
       Monstro selecionado. Clique num monstro do oponente pra atacar, ou use "Ataque direto" se o campo dele estiver vazio.
     </div>
 
+    <div class="stepper" id="stepper"></div>
+
     <div class="controles-turno">
       <span class="fase-label" id="fase-atual">Fase Principal 1</span>
-      <button id="btn-ataque-direto">Ataque direto</button>
+      <button id="btn-ataque-direto" title="Selecione um monstro primeiro">Ataque direto</button>
       <button id="btn-batalha">Ir para Batalha</button>
+      <button id="btn-main2">Ir para Principal 2</button>
       <button id="btn-encerrar">Encerrar turno</button>
     </div>
   </div>
@@ -56,6 +59,7 @@
   <section class="secao" style="margin-bottom:20px;">
     <h2 style="font-size:1.1rem;">Sua mão</h2>
     <div class="mao-linha" id="mao-jogador"></div>
+    <div id="motivo-mao" style="font-size:0.78rem; color:var(--parchment-dim); margin-top:8px; font-family:var(--font-mono);"></div>
   </section>
 
   <section class="secao">
@@ -64,7 +68,7 @@
   </section>
 
   <div class="callout">
-    <strong>Como jogar:</strong> na Fase Principal 1, invoque um monstro da mão (ataque ou defesa virada pra baixo). Vá pra Batalha, clique num monstro seu em ataque pra selecioná-lo, depois clique no alvo — ou ataque direto se o oponente não tiver monstros. Encerre o turno quando terminar.
+    <strong>Como jogar:</strong> na <strong>Principal 1</strong>, invoque um monstro (ataque ou defesa virada pra baixo) — se esquecer, ainda dá pra invocar na <strong>Principal 2</strong>, depois da batalha. Na <strong>Batalha</strong>, clique num monstro seu em ataque pra selecioná-lo, depois clique no alvo — ou ataque direto se o oponente não tiver monstros. Você só invoca <strong>1 monstro por turno</strong>, não importa em qual das duas fases principais. Encerre o turno quando terminar.
   </div>
 </main>
 

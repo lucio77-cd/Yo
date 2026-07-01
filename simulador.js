@@ -76,7 +76,7 @@ function registrar(msg) {
 // ---------- ações do jogador ----------
 
 function invocar(idxMao, posicao) {
-  if (estado.turno !== "jogador" || estado.fase !== "main1") return;
+  if (estado.turno !== "jogador" || (estado.fase !== "main1" && estado.fase !== "main2")) return;
   if (estado.invocouEsteTurno) {
     registrar("Você só pode fazer uma invocação normal por turno.");
     render();
@@ -107,8 +107,26 @@ function invocar(idxMao, posicao) {
 
 function irParaBatalha() {
   if (estado.turno !== "jogador" || estado.fase !== "main1") return;
+  const semMonstro = estado.campo.jogador.every((z) => z === null);
+  if (semMonstro) {
+    const confirma = window.confirm(
+      "Você ainda não invocou nenhum monstro neste turno. Sem monstro, você não pode atacar nesta fase. Ir para a Fase de Batalha mesmo assim?"
+    );
+    if (!confirma) return;
+  }
   estado.fase = "batalha";
-  registrar("Fase de Batalha. Escolha um monstro em ataque pra atacar, ou encerre o turno.");
+  registrar("Fase de Batalha. Escolha um monstro em ataque pra atacar, ou avance pra Principal 2.");
+  render();
+}
+
+function irParaMain2() {
+  if (estado.turno !== "jogador" || estado.fase !== "batalha") return;
+  estado.fase = "main2";
+  registrar(
+    estado.invocouEsteTurno
+      ? "Fase Principal 2. Você já invocou este turno — só falta encerrar."
+      : "Fase Principal 2. Ainda dá pra invocar um monstro aqui, se não fez isso na Principal 1."
+  );
   render();
 }
 
@@ -320,8 +338,15 @@ function render() {
     })
     .join("");
 
+  const suaVez = estado.turno === "jogador";
+  const podeInvocar = suaVez && (estado.fase === "main1" || estado.fase === "main2") && !estado.invocouEsteTurno;
+
+  let motivoTravado = "";
+  if (!suaVez) motivoTravado = "É o turno do oponente.";
+  else if (estado.fase === "batalha") motivoTravado = "Invocação não disponível durante a Batalha — avance pra Principal 2.";
+  else if (estado.invocouEsteTurno) motivoTravado = "Você já invocou 1 monstro este turno (limite por turno).";
+
   const mao = document.getElementById("mao-jogador");
-  const podeInvocar = estado.turno === "jogador" && estado.fase === "main1" && !estado.invocouEsteTurno;
   mao.innerHTML = estado.mao.jogador
     .map(
       (c, i) => `
@@ -334,19 +359,50 @@ function render() {
         </div>
       </div>
       <div class="acoes-mao">
-        <button ${podeInvocar ? "" : "disabled"} data-acao="atk" data-i="${i}">Invocar (Ataque)</button>
-        <button ${podeInvocar ? "" : "disabled"} data-acao="def" data-i="${i}">Definir (Defesa)</button>
+        <button ${podeInvocar ? "" : "disabled"} title="${podeInvocar ? "" : motivoTravado}" data-acao="atk" data-i="${i}">Invocar (Ataque)</button>
+        <button ${podeInvocar ? "" : "disabled"} title="${podeInvocar ? "" : motivoTravado}" data-acao="def" data-i="${i}">Definir (Defesa)</button>
       </div>
     </div>`
     )
     .join("");
+  document.getElementById("motivo-mao").textContent = podeInvocar ? "" : motivoTravado;
 
-  // status de fase / botões
-  document.getElementById("fase-atual").textContent =
-    estado.turno === "ia" ? "Turno do oponente…" : estado.fase === "main1" ? "Fase Principal 1" : "Fase de Batalha";
+  // ---- stepper de fase ----
+  const passos = [
+    { id: "main1", label: "Principal 1" },
+    { id: "batalha", label: "Batalha" },
+    { id: "main2", label: "Principal 2" },
+  ];
+  document.getElementById("stepper").innerHTML = passos
+    .map((p) => {
+      const ativo = suaVez && estado.fase === p.id;
+      const passado = suaVez && passos.findIndex((x) => x.id === estado.fase) > passos.findIndex((x) => x.id === p.id);
+      return `<span class="passo ${ativo ? "ativo" : ""} ${passado ? "feito" : ""}">${p.label}</span>`;
+    })
+    .join('<span class="seta">→</span>');
 
-  document.getElementById("btn-batalha").disabled = !(estado.turno === "jogador" && estado.fase === "main1");
-  document.getElementById("btn-encerrar").disabled = !(estado.turno === "jogador");
+  document.getElementById("fase-atual").textContent = suaVez
+    ? { main1: "Sua vez — Fase Principal 1: invoque um monstro.", batalha: "Sua vez — Fase de Batalha: ataque ou avance.", main2: "Sua vez — Fase Principal 2: última chance de invocar." }[estado.fase]
+    : "Turno do oponente — aguarde.";
+
+  const btnBatalha = document.getElementById("btn-batalha");
+  const btnMain2 = document.getElementById("btn-main2");
+  btnBatalha.style.display = estado.fase === "main1" ? "inline-block" : "none";
+  btnMain2.style.display = estado.fase === "batalha" ? "inline-block" : "none";
+  btnBatalha.disabled = !(suaVez && estado.fase === "main1");
+  btnMain2.disabled = !(suaVez && estado.fase === "batalha");
+  document.getElementById("btn-encerrar").disabled = !suaVez;
+
+  const podeAtacarDireto =
+    estado.ataqueSelecionado !== null && estado.campo.ia.every((z) => z === null);
+  const btnDireto = document.getElementById("btn-ataque-direto");
+  btnDireto.disabled = !podeAtacarDireto;
+  btnDireto.title =
+    estado.ataqueSelecionado === null
+      ? "Selecione primeiro um monstro seu em ataque."
+      : podeAtacarDireto
+      ? ""
+      : "Só é possível atacar direto se o campo do oponente estiver vazio.";
 
   document.getElementById("aviso-alvo").style.display =
     estado.ataqueSelecionado !== null ? "block" : "none";
@@ -390,6 +446,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("btn-batalha").addEventListener("click", irParaBatalha);
+  document.getElementById("btn-main2").addEventListener("click", irParaMain2);
   document.getElementById("btn-encerrar").addEventListener("click", encerrarTurno);
   document.getElementById("btn-reiniciar").addEventListener("click", iniciarJogo);
 });

@@ -366,6 +366,27 @@ main { max-width: 920px; margin: 0 auto; padding: 40px 24px 100px; }
   padding-top: 6px;
 }
 
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  flex-wrap: wrap;
+}
+
+.stepper .passo {
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(232, 196, 104, 0.2);
+  color: var(--parchment-dim);
+}
+
+.stepper .passo.feito { color: var(--emerald); border-color: rgba(53, 208, 161, 0.4); }
+.stepper .passo.ativo { color: var(--void); background: var(--gold); border-color: var(--gold); font-weight: 600; }
+.stepper .seta { color: var(--gold-dim); }
+
 .controles-turno {
   display: flex;
   align-items: center;
